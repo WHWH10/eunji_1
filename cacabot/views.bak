@@ -1,0 +1,313 @@
+# -*- coding: utf-8 -*-
+import json
+import re
+import sys
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from xml.dom.minidom import parseString
+from django.template import RequestContext, Template
+from django.utils.encoding import python_2_unicode_compatible
+##--<< CST_token 인증처리
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
+
+@csrf_protect
+# Create your views here.
+#abc= "한글1".decode('utf-8')
+@csrf_exempt
+@python_2_unicode_compatible
+def keyboardpage(request):
+    #https://docs.djangoproject.com/en/1.9/ref/request-response/#django.http.HttpRequest
+    print("#####################################################  keyboardpage")
+    print("@request.method : "+ request.method)
+    print("@HttpRequest.path_info : "+ request.path_info)
+    print("@HttpRequest.path : "+ request.path)
+    print("@req.META[SERVER_NAME] : "+ request.META["SERVER_NAME"])
+    print("@req.META[CONTENT_LENGTH] : "+ request.META["CONTENT_LENGTH"])
+    print("@req.META[CONTENT_TYPE] : "+ request.META["CONTENT_TYPE"])
+    print("@req.META[HTTP_HOST] : "+ request.META["HTTP_HOST"])
+    print("@req.META[REMOTE_ADDR] : "+ request.META["REMOTE_ADDR"])
+    print("@req.META[REMOTE_HOST] : "+ request.META["REMOTE_HOST"])
+    print("@HttpRequest.scheme : "+ request.scheme)
+    print("@req.META[REQUEST_METHOD] : "+ request.META["REQUEST_METHOD"])
+    print("@req.META[SERVER_PORT] : "+ request.META["SERVER_PORT"])
+
+    #print("@HttpRequest.body : "+ request.body)
+    #root1 = parseString(request.body)   HttpRequest.read()
+    ###############print("@HttpRequest.content_params : "+ request.content_params['charset'])
+    #print("@root.firstChild.firstChild : "+ root1.firstChild.firstChild)
+
+    #print("@HttpRequest.encoding : "+ request.encoding)
+    #print("@HttpRequest.GET : "+ request.GET)
+    #print("@HttpRequest.POST : "+ request.POST)
+    #print("@HttpRequest.COOKIES : "+ request.COOKIES)
+    #print("@HttpRequest.FILES : "+ request.FILES)
+    #print("@req.META[REMOTE_USER] : "+ request.META["REMOTE_USER"])
+
+#CONTENT_LENGTH – The length of the request body (as a string).
+#CONTENT_TYPE – The MIME type of the request body.
+#HTTP_ACCEPT – Acceptable content types for the response.
+#HTTP_ACCEPT_ENCODING – Acceptable encodings for the response.
+#HTTP_ACCEPT_LANGUAGE – Acceptable languages for the response.
+#HTTP_HOST – The HTTP Host header sent by the client.
+#HTTP_REFERER – The referring page, if any.
+#HTTP_USER_AGENT – The client’s user-agent string.
+#QUERY_STRING – The query string, as a single (unparsed) string.
+#REMOTE_ADDR – The IP address of the client.
+#REMOTE_HOST – The hostname of the client.
+#REMOTE_USER – The user authenticated by the Web server, if any.
+#REQUEST_METHOD – A string such as "GET" or "POST".
+#SERVER_NAME – The hostname of the server.
+#SERVER_PORT – The port of the server (as a string).
+    data = {'foo':'bar','hello':'world'}
+    #return HttpResponse(json.dump(data), cnntext_type='application/json')
+################################################################################
+#>>> response = HttpResponse("Here's the text of the Web page.")
+#>>> response = HttpResponse("Text only, please.", content_type="text/plain")
+#>>> response.write("<p>Here's the text of the Web page.</p>")
+#>>> response.write("<p>Here's another paragraph.</p>")
+#>>> from django.http import JsonResponse
+#>>> response = JsonResponse({'foo': 'bar'})
+#>>> response.content
+#b'{"foo": "bar"}'
+#>>> response = JsonResponse(data, encoder=MyJSONEncoder)
+#>>> from django.http import FileResponse
+#>>> response = FileResponse(open('myfile.png', 'rb'))
+
+#def current_datetime(request):
+#    now = datetime.datetime.now()
+#    html = "<html><body>It is now %s.</body></html>" % now
+#    return HttpResponse(html)
+#    return HttpResponse(status=201)
+
+#c = Context({'var': request.GET.get('var', 42)})
+
+#    if request.method.upper() != "TRACE":
+#        return HttpResponseNotAllowed("TRACE")
+#    elif request.body:
+#        return HttpResponseBadRequest("TRACE requests MUST NOT include an entity")
+#    else:
+#        protocol = request.META["SERVER_PROTOCOL"]
+#        t = Template(
+#            '{{ method }} {{ uri }} {{ version }}',
+#            name="TRACE Template",
+#        )
+#        c = Context({
+#            'method': request.method,
+#            'uri': request.path,
+#            'version': protocol,
+#        })
+#        return HttpResponse(t.render(c))
+
+#    if request.method == 'POST':
+#        root = parseString(request.body)
+#        first_book = root.firstChild.firstChild
+#        title, author = [n.firstChild.nodeValue for n in first_book.childNodes]
+#        t = Template("{{ title }} - {{ author }}", name="Book template")
+#        c = Context({"title": title, "author": author})
+#    else:
+#        t = Template("GET request.", name="Book GET template")
+#        c = Context()
+
+#    return HttpResponse(t.render(c))
+
+#
+#    req.method = "POST"
+#    req.POST = {'username': 'testclient', 'password': password, 'csrfmiddlewaretoken': token1}
+#
+#    req.META["SERVER_NAME"] = "testserver"  # Required to have redirect work in login view
+#    req.META["SERVER_PORT"] = 80
+
+
+
+
+
+
+
+    #return render(request, 'keyboard.html')
+    #return HttpResponse('{ "type" : "text" }')
+    return HttpResponse('{ "type" : "buttons", "buttons" : ["채권신청", "신차구매", "대화하기"] }')
+
+
+@csrf_exempt
+@python_2_unicode_compatible
+def messagepage(request):
+    print("#####################################################  messagepage")
+    print("@request.method : "+ request.method)
+    print("@HttpRequest.path_info : "+ request.path_info)
+    print("@HttpRequest.path : "+ request.path)
+    print("@req.META[SERVER_NAME] : "+ request.META["SERVER_NAME"])
+    print("@req.META[CONTENT_LENGTH] : "+ request.META["CONTENT_LENGTH"])
+    print("@req.META[CONTENT_TYPE] : "+ request.META["CONTENT_TYPE"])
+    print("@req.META[HTTP_HOST] : "+ request.META["HTTP_HOST"])
+    print("@req.META[REMOTE_ADDR] : "+ request.META["REMOTE_ADDR"])
+    print("@req.META[REMOTE_HOST] : "+ request.META["REMOTE_HOST"])
+    print("@HttpRequest.scheme : "+ request.scheme)
+    print("@req.META[REQUEST_METHOD] : "+ request.META["REQUEST_METHOD"])
+    print("@req.META[SERVER_PORT] : "+ request.META["SERVER_PORT"])
+
+    sample_str = "gk하하하하"
+    sample_str = re.sub("[(*&]", "", sample_str)
+    #text
+    #채권신청
+    #OgUPGOHOEHFI
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    msgRtnType = body.get('type')
+    msgRtnContent = body.get('content')
+    msgRtnUserKey = body.get('user_key')
+
+    print("@ b.type(): "+ msgRtnType)
+    print("@ b.content(): "+ msgRtnContent)
+    print("@ b.user_key(): "+ msgRtnUserKey)
+
+PhotoVal={}
+MsgButtonsVal={}
+MessageVal={}
+KeyboardVal={}
+RtnVal={}
+
+TxtMsg=msgRtnContent+' 요청이 성공적으로 접수되었습니다. 축하합니다!'
+PhotoVal['url']='http://file.carisyou.com/upload/2017/04/07/EDITOR_201704070252054020.jpg'
+PhotoVal['width']=640
+PhotoVal['height']=480
+MsgButtonsVal['label']= '사이트 구경하기'
+MsgButtonsVal['url']= 'http://www.carisyou.co.kr'
+MessageVal['text']=TxtMsg
+MessageVal['photo']=PhotoVal
+MessageVal['message_button']=MsgButtonsVal
+
+TypeVal='buttons'
+#ButtonListVal =["처음으로","다시 등록하기","취소하기" ]
+ButtonListVal =["채권신청","신차구매","대화하기" ]
+KeyboardVal['type']=TypeVal
+KeyboardVal['buttons']=ButtonListVal
+
+RtnVal['message'] =MessageVal
+RtnVal['keyboard'] =KeyboardVal
+print(RtnVal)
+
+del RtnVal['message']['photo']
+del RtnVal['message']['message_button']
+RtnVal['keyboard']['type']='text'
+RtnVal['keyboard']['buttons']='text'
+print(RtnVal)
+
+
+    msgPhoto = {'url':'http://file.carisyou.com/upload/2017/04/07/EDITOR_201704070252054020.jpg',
+                'width':600,
+                'height':480}
+    msgLabel = {'label':'사이트 구경하기',
+                'url':'http://www.carisyou.co.kr'}
+    msgButton = {'type':'buttons',
+                'buttons':[ "처음으로", "다시 등록하기", "취소하기" ]}
+
+    msgButtonEntry= {'type':'buttons',
+                'buttons':[ "채권신청", "신차구매", "대화하기" ]}
+
+    msgData = { 'text':msgRtnContent+' 요청이 성공적으로 접수되었습니다. 축하합니다!',
+                "photo": msgPhoto,
+                "message_button": msgLabel,
+                }
+
+    msgDataF = { 'message':msgData,
+                "keyboard": msgButtonEntry
+                }
+
+    #print(re.compile('[ㄱ-ㅎ|ㅏ-ㅣ|가-힣0-9]+').match("12한글4567py123").group())
+    if  msgRtnContent.find("나와라") != -1 :
+        return HttpResponse('{"message": { "text": "반말하지 마라. 기분나쁘다."}, "keyboard":{ "type" : "text" }}')
+    elif msgRtnContent.find("누구") != -1 or msgRtnContent.find("뭐하") != -1 or msgRtnContent.find("무슨") != -1 or msgRtnContent.find("앨해") != -1 or msgRtnContent.find("일 해") != -1:
+        return HttpResponse('{"message": { "text": "저는 카이즈유 봇입니다. 채권신청, 신차 구매등을 수행합니다. 메뉴를 원하시면 등록 또는 신청등을 입력하세요!"}, "keyboard":{ "type" : "text" }}')
+    elif msgRtnContent in ["네","어","그래","아니"] :
+        return HttpResponse('{"message": { "text": "감사합니다. 긴 문장으로 키워드분류를 테스트해 보세요."}, "keyboard":{ "type" : "text" }}')
+    elif msgRtnContent in ["ㅎㅎ","ㅎ","흐흐","흐"] :
+        return HttpResponse('{"message": { "text": "웃지마세요. 지금 엄청 바쁩니다."}, "keyboard":{ "type" : "text" }}')
+    elif msgRtnContent.find("날씨") != -1 :
+        return HttpResponse('{"message": { "text": "오늘은 화창하네요. 벗꽃구경하기에 안성맞춤입니다. ㅎㅎㅎ"}, "keyboard":{ "type" : "text" }}')
+    elif msgRtnContent.find("기분") != -1 :
+        return HttpResponse('{"message": { "text": "기분이 꿀꿀합니다. 뭐 재미있는일 없나요?. ㅎㅎㅎ"}, "keyboard":{ "type" : "text" }}')
+    elif msgRtnContent == "대화하기" :
+        return HttpResponse('{"message": { "text": "안녕하세요. 대화모드입니다. 언제든지 메뉴를 원하시면 등록, 신청, 메뉴를 입력하세요!"}, "keyboard":{ "type" : "text" }}')
+    elif msgRtnContent.find("채권") != -1 :
+        return HttpResponse('{"message": { "text": "차량번호를 입력하세요!"}, "keyboard":{ "type" : "text" }}')
+    elif msgRtnContent.find("신차") != -1 or msgRtnContent.find("구매") != -1:
+        msgDataF = { 'message':msgData, "keyboard":{ "type" : "text" }}
+        return HttpResponse(json.dumps(msgDataF))
+    elif msgRtnContent.find("등록") != -1 or msgRtnContent.find("신청") != -1 or msgRtnContent.find("메뉴") != -1 or msgRtnContent.find("나와") != -1 or msgRtnContent.find("뭐해") != -1  or msgRtnContent.find("뭘해") != -1  :
+        msgDataF = { 'message': { 'text':  ' 원하는 작업을 선택하세요!'}, "keyboard": msgButtonEntry }
+        return HttpResponse(json.dumps(msgDataF))
+    else:  # size >= len(self.buffer)
+        msgRtnContent = re.split('[는의을이가에으로를해 ?!,./\]\[]+',msgRtnContent)
+        #msgRtnContent = re.split('(\+)',msgRtnContent)
+        msgData = "' '".join(msgRtnContent)
+        msgData = { "text": u"주요 키워드는 [" + msgData + u"] 키워드 분류가 성공적인가요?"}
+        msgDataF = { 'message':msgData, "keyboard":{ "type" : "text" }}
+        return HttpResponse(json.dumps(msgDataF))
+
+        #return HttpResponse('{"message": { "text": "주요 키워드는 [" + string.msgRtnContent + "] 안녕하세요? 저는 카이즈유 봇입니다. 무엇을 도와드릴까요?"}, "keyboard":{ "type" : "text" }}')
+        #return HttpResponse('{"message": { "text": "안녕하세요? 저는 카이즈유 봇입니다. 무엇을 도와드릴까요?"}, "keyboard":{ "type" : "text" }}')
+        #return HttpResponse('{"message": { "text": "아직은 무슨말인지 식별하지 못하겠네요. 정확하게 기술해 주세요."}, "keyboard":{ "type" : "text" }}')
+
+    #return render(request, 'message.html')
+    #return HttpResponse(json.dump(data), context_type='application/json')
+    #return HttpResponse('{"message": { "text": "안녕하세요? 저는 카이즈유 봇입니다. 무엇을 도와드릴까요?"}, "keyboard":{ "type" : "text" }}')
+    #return HttpResponse(json.dumps(msgDataF))
+    #return HttpResponse('{"message": { "text": "귀하의 차량이 성공적으로 등록되었습니다. 축하합니다!"}, "keyboard":{ "type" : "buttons", "buttons" : ["채권신청", "신차구매", "리스구매"] }}')
+    #return HttpResponse('{ "message": { "text": "귀하의 차량이 성공적으로 등록되었습니다. 축하합니다!"}}')
+    #return HttpResponse('{ "message": { "text": "귀하의 차량이 성공적으로 등록되었습니다. 축하합니다!", "photo": { "url": "http://file.carisyou.com/upload/2017/04/07/EDITOR_201704070252054020.jpg", "width": 640, "height": 480 }, "message_button": { "label": "주유 쿠폰받기", "url": "https://coupon/url" } }, "keyboard": { "type": "buttons", "buttons": [ "처음으로", "다시 등록하기", "취소하기" ] } }')
+
+@csrf_exempt
+def friendpage(request):
+    print("#####################################################  friendpage")
+    print("@request.method : "+ request.method)
+    print("@HttpRequest.path_info : "+ request.path_info)
+    print("@HttpRequest.path : "+ request.path)
+    print("@req.META[SERVER_NAME] : "+ request.META["SERVER_NAME"])
+    print("@req.META[CONTENT_LENGTH] : "+ request.META["CONTENT_LENGTH"])
+    print("@req.META[CONTENT_TYPE] : "+ request.META["CONTENT_TYPE"])
+    print("@req.META[HTTP_HOST] : "+ request.META["HTTP_HOST"])
+    print("@req.META[REMOTE_ADDR] : "+ request.META["REMOTE_ADDR"])
+    print("@req.META[REMOTE_HOST] : "+ request.META["REMOTE_HOST"])
+    print("@HttpRequest.scheme : "+ request.scheme)
+    print("@req.META[REQUEST_METHOD] : "+ request.META["REQUEST_METHOD"])
+    print("@req.META[SERVER_PORT] : "+ request.META["SERVER_PORT"])
+
+    if request.method == 'POST':
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        msgRtnUserKey = body.get('user_key')
+        print("@ 추가된 친구입니다.: "+ msgRtnUserKey)
+    elif request.method == 'DELETE':
+        print("@ 차단된 친구입니다. : "+ request.path)
+    else:
+        print("@ 정의되지 않은 접근입니다.. : "+ request.path)
+
+
+    return HttpResponse('{ "type" : "buttons", "buttons" : ["채권신청f", "신차구매", "리스구매"] }')
+
+
+@csrf_exempt
+def chatroompage(request):
+    print("#####################################################  chatroompage")
+    print("@request.method : "+ request.method)
+    print("@HttpRequest.path_info : "+ request.path_info)
+    print("@HttpRequest.path : "+ request.path)
+    print("@req.META[SERVER_NAME] : "+ request.META["SERVER_NAME"])
+    print("@req.META[CONTENT_LENGTH] : "+ request.META["CONTENT_LENGTH"])
+    print("@req.META[CONTENT_TYPE] : "+ request.META["CONTENT_TYPE"])
+    print("@req.META[HTTP_HOST] : "+ request.META["HTTP_HOST"])
+    print("@req.META[REMOTE_ADDR] : "+ request.META["REMOTE_ADDR"])
+    print("@req.META[REMOTE_HOST] : "+ request.META["REMOTE_HOST"])
+    print("@HttpRequest.scheme : "+ request.scheme)
+    print("@req.META[REQUEST_METHOD] : "+ request.META["REQUEST_METHOD"])
+    print("@req.META[SERVER_PORT] : "+ request.META["SERVER_PORT"])
+
+    if request.method == 'DELETE':
+        print("@ 채팅방을 나갔습니다. "+  request.path)
+    else:
+        print("@ 정의되지 않은 접근입니다.. : "+ request.path)
+
+
+    return HttpResponse('{ "type" : "buttons", "buttons" : ["채권신청c", "신차구매", "리스구매"] }')

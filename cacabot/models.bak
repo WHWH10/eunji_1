@@ -1,0 +1,134 @@
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
+
+
+@python_2_unicode_compatible
+class CaKeyboard(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    friends = models.ManyToManyField('self', blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+@python_2_unicode_compatible
+class CaMessage(models.Model):
+    userkey = models.CharField(max_length=20)
+    msgtype = models.CharField(max_length=10)
+    message = models.CharField(max_length=1024)
+    outmessage = models.CharField(max_length=1024)
+    keyboard = models.CharField(max_length=255)
+    inputdate = models.DateTimeField('date published')
+
+    def __str__(self):
+        return self.name
+
+
+@python_2_unicode_compatible
+class CaKeyfriend(models.Model):
+    userkey = models.CharField(max_length=20)
+    name = models.CharField(max_length=255)
+    inputdate = models.DateTimeField('date published')
+
+    def __str__(self):
+        return self.name
+
+
+@python_2_unicode_compatible
+class CaChatroom(models.Model):
+    name = models.CharField(max_length=255)
+    books = models.ManyToManyField(Book)
+    original_opening = models.DateTimeField()
+    friday_night_closing = models.TimeField()
+
+    def __str__(self):
+        return self.name
+
+@python_2_unicode_compatible
+class Book(models.Model):
+    isbn = models.CharField(max_length=9)
+    name = models.CharField(max_length=255)
+    pages = models.IntegerField()
+    rating = models.FloatField()
+    price = models.DecimalField(decimal_places=2, max_digits=6)
+    authors = models.ManyToManyField(Author)
+    contact = models.ForeignKey(Author, models.CASCADE, related_name='book_contact_set')
+    publisher = models.ForeignKey(Publisher, models.CASCADE)
+    pubdate = models.DateField()
+
+    def __str__(self):
+        return self.name
+
+@python_2_unicode_compatible
+class Employee(models.Model):
+    # The order of these fields matter, do not change. Certain backends
+    # rely on field ordering to perform database conversions, and this
+    # model helps to test that.
+    first_name = models.CharField(max_length=20)
+    manager = models.BooleanField(default=False)
+    last_name = models.CharField(max_length=20)
+    store = models.ForeignKey(Store, models.CASCADE)
+    age = models.IntegerField()
+    salary = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return '%s %s' % (self.first_name, self.last_name)
+
+@python_2_unicode_compatible
+class Company(models.Model):
+    name = models.CharField(max_length=200)
+    motto = models.CharField(max_length=200, null=True, blank=True)
+    ticker_name = models.CharField(max_length=10, null=True, blank=True)
+    description = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return 'Company(name=%s, motto=%s, ticker_name=%s, description=%s)' % (
+            self.name, self.motto, self.ticker_name, self.description,
+        )
+
+
+class Event(models.Model):
+    main_band = models.ForeignKey(
+        Band,
+        models.CASCADE,
+        limit_choices_to=models.Q(pk__gt=0),
+        related_name='events_main_band_at',
+    )
+    supporting_bands = models.ManyToManyField(
+        Band,
+        blank=True,
+        related_name='events_supporting_band_at',
+        help_text='Supporting Bands.',
+    )
+    start_date = models.DateField(blank=True, null=True)
+    start_time = models.TimeField(blank=True, null=True)
+    description = models.TextField(blank=True)
+    link = models.URLField(blank=True)
+    min_age = models.IntegerField(blank=True, null=True)
+
+class Clues(models.Model):
+    ID = models.AutoField(primary_key=True)
+    EntryID = models.ForeignKey(Entries, models.CASCADE, verbose_name='Entry', db_column='Entry ID')
+    Clue = models.CharField(max_length=150)
+
+
+
+
+
+
+class Question(models.Model):
+  question_text = models.CharField(max_length=200)
+  pub_date = models.DateTimeField('date published')
+ 
+  def __unicode__(self):
+    return self.question_text
+ 
+class Choice(models.Model):
+  question = models.ForeignKey(Question)
+  choice_text = models.CharField(max_length=200)
+  votes = models.IntegerField(default=0)
+ 
+  def __unicode__(self):
+    return self.choice_text
