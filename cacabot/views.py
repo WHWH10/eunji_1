@@ -82,7 +82,7 @@ def messagepage(request):
                 'message': {
                     'text': response,
                     'photo': {
-                        'url': 'http://file.carisyou.com/upload/2017/05/15/FILE_201705150608369290.jpg',
+                        'url': 'http://',
                         'width': 640,
                         'height': 480
                     },
@@ -124,7 +124,7 @@ def messagepage(request):
             'message' : {
                 'text' : '카이즈유 챗봇을 이용해주셔서 감사합니다.\n우선 국산차, 수입차를 선택해주세요.',
                 'photo' : {
-                    'url' : 'http://file.carisyou.com/upload/2017/02/28/FILE_201702280247178240.jpg',
+                    'url' : 'http://',
                     'width' : 640,
                     'height' : 480,
                 },
@@ -194,7 +194,7 @@ def messagepage(request):
                 'message': {
                     'text' : '현대 2017 뉴 아반떼(AD)\n' + car_price + '\n' + response,
                     'photo' : {
-                        'url' : 'http://file.carisyou.com/newcar/color/5117_hyundai_newavante2016_100.png',
+                        'url' : 'http://',
                         'width' : 640,
                         'height' : 480
                     },
@@ -218,13 +218,13 @@ def messagepage(request):
                 'message': {
                     'text': '국내차 등록순위' + response,
                     'photo': {
-                        'url' : 'http://file.carisyou.com/upload/2017/09/07/FILE_201709070226435330.jpg',
+                        'url' : 'http://',
                         'width' : 640,
                         'height' : 480
                     },
                     'message_button': {
                         'label': '등록순위',
-                        'url': 'http://www.carisyou.com/theme/top10/63?selectedYear=&selectedMonth=00&pageIndex=1'
+                        'url': 'http://'
                     }
                 },
                 'keyboard': {
@@ -272,7 +272,7 @@ def messagepage(request):
         return JsonResponse({
             'message' : {
                 'photo' : {
-                    'url' : 'http://file.carisyou.com/upload/2017/09/01/FILE_201709010921074070.jpg',
+                    'url' : 'http://',
                     'width' : 640,
                     'height' : 480
                 },
